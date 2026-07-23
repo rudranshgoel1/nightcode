@@ -1,0 +1,21 @@
+{
+    "name": "@nightcode/server",
+    "type": "module",
+    "private": true,
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "dev": "bun run --hot src/index.ts"
+    },
+    "dependencies": {
+        "@hono/zod-validator": "^0.9.0",
+        "@nightcode/shared": "workspace:*",
+        "hono": "^4.12.31",
+        "zod": "^4.4.3"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "@types/react": "^19.2.17"
+    }
+}   
