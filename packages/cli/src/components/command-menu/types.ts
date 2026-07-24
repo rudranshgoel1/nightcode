@@ -3,6 +3,7 @@ import type { ToastContextValue } from "../../providers/toast";
 
 export type CommandContext = {
     exit: () => void;
+    navigate: (path: string) => void;
     toast: ToastContextValue;
     dialog: DialogContextValue;
 };
