@@ -1,32 +1,37 @@
-import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router";
-import { useTheme } from "../providers/theme";
+import { useEffect, useRef } from "react";
+import { useNavigate, useLocation, useLoaderData } from "react-router";
 import { SessionShell } from "../components/session-shell";
 import { ErrorMessage, UserMessage, BotMessage } from "../components/messages";
+import { useChat } from "../hooks/use-chat";
 
 export function NewSession() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { colors } = useTheme();
 
     const state = location.state as { message?: string } | null;
+    const { messages, loading, sendMessage, startWith } = useChat();
+    const started = useRef(false);
 
     useEffect(() => {
         if (!state?.message) {
-            navigate("/", { replace: true })
+            navigate("/", { replace: true });
+            return;
         }
-    }, [state, navigate]);
+        if (!started.current) {
+            started.current = true;
+            startWith(state.message);
+        }
+    }, [state, navigate, startWith]);
 
     if (!state?.message) return null;
 
     return (
-        <SessionShell onSubmit={() => { }} inputDisabled loading>
-            <UserMessage message={state.message} />
-            <BotMessage
-                content="This is a sample bot response to demonstrate the message layout."
-                model="opus-4-6"
-            />
-            <ErrorMessage message="This is a sample error message." />
+        <SessionShell onSubmit={sendMessage} inputDisabled={loading} loading={loading}>
+            {messages.map((m, i) => {
+                if (m.kind === "user") return <UserMessage key={i} message={m.text} />;
+                if (m.kind === "bot") return <BotMessage key={i} content={m.text} model={m.model} />;
+                return <ErrorMessage key={i} message={m.text} />;
+            })}
         </SessionShell>
     );
-};
+}
