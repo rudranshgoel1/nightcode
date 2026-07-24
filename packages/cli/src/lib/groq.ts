@@ -1,3 +1,5 @@
+import { getGroqApiKey } from "./config";
+
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL = "llama-3.3-70b-versatile";
 
@@ -16,11 +18,11 @@ export class GroqError extends Error {
 }
 
 export async function sendChatMessage(messages: ChatMessage[]): Promise<string> {
-    const apiKey = process.env.GROQ_API_KEY;
+    const apiKey = getGroqApiKey();
 
     if (!apiKey) {
         throw new GroqError(
-            "GROQ_API_KEY is not set. Include it in .env"
+            "No Groq API key found. Run /login or /signup to connect your Groq account."
         );
     }
 

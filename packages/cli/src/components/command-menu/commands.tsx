@@ -1,5 +1,10 @@
-import { ThemeDialogContent } from "../dialogs";
+import { ThemeDialogContent, GroqKeyDialogContent } from "../dialogs";
+import { openBrowser } from "../../lib/browser";
 import type { Command } from "./types";
+
+// clerk auth
+const CLERK_SIGN_IN_URL = "https://sought-mule-22.accounts.dev/sign-in";
+const CLERK_SIGN_UP_URL = "https://sought-mule-22.accounts.dev/sign-up";
 
 export const COMMANDS: Command[] = [
     {
@@ -7,8 +12,6 @@ export const COMMANDS: Command[] = [
         description: "Start a new conversation",
         value: "/new",
         action: (ctx) => {
-            ctx.toast.show({ message: "Starting new conversation...", duration: 1000 });
-            ctx.toast.show({ message: "New conversation started" })
             ctx.navigate("/");
         }
     },
@@ -58,7 +61,25 @@ export const COMMANDS: Command[] = [
         description: "Sign in with your browser",
         value: "/login",
         action: (ctx) => {
+            openBrowser(CLERK_SIGN_IN_URL);
             ctx.toast.show({ message: "Opening browser to sign in..." });
+            ctx.dialog.open({
+                title: "Connect Groq",
+                children: <GroqKeyDialogContent />
+            });
+        }
+    },
+    {
+        name: "signup",
+        description: "Create an account in your browser",
+        value: "/signup",
+        action: (ctx) => {
+            openBrowser(CLERK_SIGN_UP_URL);
+            ctx.toast.show({ message: "Opening browser to sign up..." });
+            ctx.dialog.open({
+                title: "Connect Groq",
+                children: <GroqKeyDialogContent />
+            });
         }
     },
     {
