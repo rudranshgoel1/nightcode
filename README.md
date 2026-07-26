@@ -16,8 +16,9 @@
 
 #### Steps on how to setup:
 1. Make an account on groq.com, and get an api key
-2. Clone this repo using `git clone https://github.com/rudranshgoel1/nightcode.git`
-3. Run the application using `bun run dev:cli`
+2. Download the binary for nightcode from the [latest release](https://github.com/rudranshgoel1/nightcode/releases/latest) (macOS Apple Silicon or Windows)
+3. a) On macOS: open a terminal in the download folder and run `chmod +x nightcode-macos-arm64` once, then run `./nightcode-macos-arm64`.
+b) On Windows: double click `nightcode-windows-x64.exe`, or run it from a terminal.
 4. Execute the command of `/login` or `/signup`
 5. Log in / Sign up through the browser
 6. Enter the Groq API Key in the nightcode dialog.
