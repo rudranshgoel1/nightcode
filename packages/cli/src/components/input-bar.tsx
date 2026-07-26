@@ -1,6 +1,7 @@
 import { useRef, useCallback, useEffect } from "react";
 import { TextareaRenderable } from "@opentui/core";
 import { useRenderer } from "@opentui/react";
+import { useNavigate } from "react-router";
 import type { KeyBinding } from "@opentui/core";
 import { EmptyBorder } from "./border";
 import { StatusBar } from "./status-bar";
@@ -28,6 +29,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
     const textareaRef = useRef<TextareaRenderable>(null);
     const onSubmitRef = useRef<() => void>(() => { });
     const renderer = useRenderer();
+    const navigate = useNavigate();
     const toast = useToast();
     const dialog = useDialog();
     const { isTopLayer, setResponder } = useKeyboardLayer();
@@ -74,6 +76,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
         if (command.action) {
             command.action({
                 exit: () => renderer.destroy(),
+                navigate: (path: string) => navigate(path),
                 toast,
                 dialog,
             });

@@ -30,7 +30,11 @@ export function NewSession() {
         if (!state) {
             navigate("/", { replace: true })
         }
-    }, [state, navigate]);
+        if (!started.current) {
+            started.current = true;
+            startWith(state.message);
+        }
+    }, [state, navigate, startWith]);
 
     useEffect(() => {
         if (!state || hasStartedRef.current) return;
@@ -85,4 +89,4 @@ export function NewSession() {
             <UserMessage message={state.message} />
         </SessionShell>
     );
-};
+}

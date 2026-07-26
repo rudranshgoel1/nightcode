@@ -1,5 +1,6 @@
 import { TextAttributes } from "@opentui/core";
 import { useTheme } from "../providers/theme";
+import { GROQ_MODEL } from "../lib/groq";
 
 export function StatusBar() {
     const { colors } = useTheme();
@@ -10,7 +11,7 @@ export function StatusBar() {
             <text attributes={TextAttributes.DIM} fg={colors.dimSeparator}>
                 &#8250;
             </text>
-            <text>opus-4-6</text>
+            <text>{GROQ_MODEL}</text>
         </box>
     )
 }
